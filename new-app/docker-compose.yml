@@ -25,6 +25,19 @@ services:
       - "6379:6379"
     networks:
       - app-network
+
+  celery:
+    build: .
+    command: ""
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_URL=redis://keydb:6379/0
+      - CELERY_BROKER_URL=redis://keydb:6379/0
+    depends_on:
+      - keydb
+    networks:
+      - app-network
     
 
 networks:
